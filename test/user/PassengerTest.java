@@ -1,11 +1,11 @@
 package user;
 
-import db.PassengerDb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.PassengerService;
 import service.PassengerServiceImpl;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PassengerTest {
 
@@ -26,13 +26,16 @@ class PassengerTest {
                 "08178746234",
                 "JesusLovesYou");
 
-        passengerServiceImpl.createPassenger()
+        passengerServiceImpl.createPassenger(passenger1);
         Passenger passenger2 = new Passenger("2",
                 "Titobi",
                 "Ligali",
                 "titobi.ligali@email.com",
                 "09011467521",
                 "AllahLovesYouTobi");
+        passengerServiceImpl.createPassenger(passenger2);
+
+        assertEquals(passengerServiceImpl.)
 
     }
 }

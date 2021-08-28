@@ -11,4 +11,5 @@ public interface PassengerService {
     List<Passenger> findPassengersByName(String firstName);
     void updatePassenger(Passenger passenger);
     void deletePassenger(Passenger passenger);
+
 }
