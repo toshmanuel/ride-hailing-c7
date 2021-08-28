@@ -4,13 +4,15 @@ import db.PassengerDb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import service.PassengerService;
+import service.PassengerServiceImpl;
 
 class PassengerTest {
 
-    PassengerDb passengerDb;
+    PassengerServiceImpl passengerServiceImpl;
     @BeforeEach
     void setUp() {
-        passengerDb = new PassengerDb();
+        passengerServiceImpl = new PassengerServiceImpl();
     }
 
     @Test
@@ -23,11 +25,13 @@ class PassengerTest {
                 "tobi.jolayemi@email.com",
                 "08178746234",
                 "JesusLovesYou");
+
+        passengerServiceImpl.createPassenger()
         Passenger passenger2 = new Passenger("2",
                 "Titobi",
                 "Ligali",
                 "titobi.ligali@email.com",
-                "08178746234",
+                "09011467521",
                 "AllahLovesYouTobi");
 
     }
