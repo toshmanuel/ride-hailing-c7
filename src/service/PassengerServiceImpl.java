@@ -2,6 +2,7 @@ package service;
 
 import db.PassengerDb;
 import exceptions.UserAlreadyExistsException;
+import exceptions.UserNotFoundException;
 import user.Passenger;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public void findPassenger(Passenger passenger) {
-
+    public Passenger findPassenger(Passenger passenger) throws UserNotFoundException {
+        return passengerDb.find(passenger);
     }
 
     @Override
