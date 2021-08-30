@@ -1,16 +1,27 @@
 package service;
 
 import db.PassengerDb;
+import exceptions.UserAlreadyExistsException;
 import user.Passenger;
 
 import java.util.List;
 
 public class PassengerServiceImpl implements PassengerService {
 
-    private PassengerDb passengerDb;
+    private final PassengerDb passengerDb;
+
+    public PassengerServiceImpl(){
+        passengerDb = new PassengerDb();
+    }
 
     @Override
-    public void createPassenger(Passenger passenger) {
+    public void createPassenger(Passenger passenger) throws UserAlreadyExistsException {
+        if (passengerDb.contains(passenger)){
+            throw new UserAlreadyExistsException("Passenger already exist");
+        }
+
+        passengerDb.save(passenger);
+
 
     }
 
@@ -39,7 +50,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     }
 
-    public int count(){
+    public long count(){
         return passengerDb.count();
     }
 }
