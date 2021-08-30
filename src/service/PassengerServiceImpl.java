@@ -32,8 +32,8 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public Passenger findPassengerById(String passengerId) {
-        return null;
+    public Passenger findPassengerById(String passengerId) throws UserNotFoundException {
+        return passengerDb.findById(passengerId);
     }
 
     @Override

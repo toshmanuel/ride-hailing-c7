@@ -9,7 +9,7 @@ import java.util.List;
 public interface PassengerService {
     void createPassenger(Passenger passenger) throws UserAlreadyExistsException;
     Passenger findPassenger(Passenger passenger) throws UserNotFoundException;
-    Passenger findPassengerById(String passengerId);
+    Passenger findPassengerById(String passengerId) throws UserNotFoundException;
     List<Passenger> findPassengersByName(String firstName);
     void updatePassenger(Passenger passenger);
     void deletePassenger(Passenger passenger);

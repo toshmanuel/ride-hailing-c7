@@ -36,4 +36,8 @@ public class Passenger {
     public String getPassengerId() {
         return passengerId;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

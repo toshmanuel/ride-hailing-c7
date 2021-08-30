@@ -37,4 +37,14 @@ public class PassengerDb {
         }
         return foundPassenger;
     }
+
+    public Passenger findById(String passengerId) throws UserNotFoundException {
+
+        String errorMessage = String.format("Passenger with id %s does not exist", passengerId);
+        if (!passengerMap.containsKey(passengerId)){
+            throw new UserNotFoundException(errorMessage);
+        }
+
+        return passengerMap.get(passengerId);
+    }
 }

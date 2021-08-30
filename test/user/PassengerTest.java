@@ -107,4 +107,24 @@ class PassengerTest {
         assertEquals("Passenger not found",
                 exception.getLocalizedMessage());
     }
+
+    @DisplayName("Find Passenger By Id")
+    @Test
+    void testToFindPassengerByPassengerId() {
+        try {
+            passengerServiceImpl.createPassenger(passenger1);
+            passengerServiceImpl.createPassenger(passenger2);
+        } catch (UserAlreadyExistsException userAlreadyExistsException) {
+            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
+        }
+        Passenger foundPassenger = null;
+        try {
+            foundPassenger = passengerServiceImpl.findPassengerById("1");
+        } catch (UserNotFoundException e) {
+            System.err.printf("%s: " , e.getLocalizedMessage());
+        }
+        assertNotNull(foundPassenger);
+
+        assertEquals("Jolayemi",foundPassenger.getLastName());
+    }
 }
