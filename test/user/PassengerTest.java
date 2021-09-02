@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.PassengerServiceImpl;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PassengerTest {
@@ -24,7 +26,7 @@ class PassengerTest {
                 "JesusLovesYou");
 
         passenger2 = new Passenger("2",
-                "Titobi",
+                "Tobi",
                 "Ligali",
                 "titobi.ligali@email.com",
                 "09011467521",
@@ -126,5 +128,20 @@ class PassengerTest {
         assertNotNull(foundPassenger);
 
         assertEquals("Jolayemi",foundPassenger.getLastName());
+    }
+
+    @DisplayName("Find Passenger By Name")
+    @Test
+    void testToFindPassengerByPassengerFirstNameOrLastName() {
+        try {
+            passengerServiceImpl.createPassenger(passenger1);
+            passengerServiceImpl.createPassenger(passenger2);
+        } catch (UserAlreadyExistsException userAlreadyExistsException) {
+            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
+        }
+
+        List<Passenger> foundPassengers = passengerServiceImpl.findPassengersByName("tOBi");
+
+        assertEquals(2, foundPassengers.size());
     }
 }

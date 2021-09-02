@@ -3,8 +3,7 @@ package db;
 import exceptions.UserNotFoundException;
 import user.Passenger;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PassengerDb {
     private final Map<String, Passenger> passengerMap;
@@ -46,5 +45,9 @@ public class PassengerDb {
         }
 
         return passengerMap.get(passengerId);
+    }
+
+    public List<Passenger> findAll() {
+        return new ArrayList<>(passengerMap.values());
     }
 }

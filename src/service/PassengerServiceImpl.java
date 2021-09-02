@@ -5,6 +5,7 @@ import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotFoundException;
 import user.Passenger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PassengerServiceImpl implements PassengerService {
@@ -37,8 +38,16 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public List<Passenger> findPassengersByName(String firstName) {
-        return null;
+    public List<Passenger> findPassengersByName(String name) {
+        List<Passenger> passengers = new ArrayList<>();
+        for (Passenger passenger :
+             passengerDb.findAll()) {
+            if (passenger.getFirstName().compareToIgnoreCase(name) == 0 || passenger.getLastName().compareToIgnoreCase(name) == 0) {
+                passengers.add(passenger);
+            }
+
+        }
+        return passengers;
     }
 
     @Override

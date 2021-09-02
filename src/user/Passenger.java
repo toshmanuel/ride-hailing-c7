@@ -40,4 +40,8 @@ public class Passenger {
     public String getLastName() {
         return lastName;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
 }
