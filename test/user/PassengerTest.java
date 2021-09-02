@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.PassengerServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,12 +40,7 @@ class PassengerTest {
     @DisplayName("Create Passenger")
     void testThatPassengerCanBeCreated() {
 
-        try {
-            passengerServiceImpl.createPassenger(passenger1);
-            passengerServiceImpl.createPassenger(passenger2);
-        } catch (UserAlreadyExistsException userAlreadyExistsException) {
-            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
-        }
+        registerUser();
 
         assertEquals(2, passengerServiceImpl.count());
 
@@ -61,12 +57,7 @@ class PassengerTest {
                 "09011467521",
                 "AllahLovesYouTobi");
 
-        try {
-            passengerServiceImpl.createPassenger(passenger1);
-            passengerServiceImpl.createPassenger(passenger2);
-        } catch (UserAlreadyExistsException userAlreadyExistsException) {
-            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
-        }
+        registerUser();
         assertEquals(2, passengerServiceImpl.count());
 
 
@@ -82,12 +73,7 @@ class PassengerTest {
     @DisplayName("Find Passenger")
     @Test
     void testToFindPassenger(){
-        try {
-            passengerServiceImpl.createPassenger(passenger1);
-            passengerServiceImpl.createPassenger(passenger2);
-        } catch (UserAlreadyExistsException userAlreadyExistsException) {
-            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
-        }
+        registerUser();
         assertEquals(2, passengerServiceImpl.count());
 
         Passenger foundPassenger = null;
@@ -113,12 +99,7 @@ class PassengerTest {
     @DisplayName("Find Passenger By Id")
     @Test
     void testToFindPassengerByPassengerId() {
-        try {
-            passengerServiceImpl.createPassenger(passenger1);
-            passengerServiceImpl.createPassenger(passenger2);
-        } catch (UserAlreadyExistsException userAlreadyExistsException) {
-            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
-        }
+        registerUser();
         Passenger foundPassenger = null;
         try {
             foundPassenger = passengerServiceImpl.findPassengerById("1");
@@ -130,18 +111,59 @@ class PassengerTest {
         assertEquals("Jolayemi",foundPassenger.getLastName());
     }
 
-    @DisplayName("Find Passenger By Name")
-    @Test
-    void testToFindPassengerByPassengerFirstNameOrLastName() {
+    private void registerUser() {
         try {
             passengerServiceImpl.createPassenger(passenger1);
             passengerServiceImpl.createPassenger(passenger2);
         } catch (UserAlreadyExistsException userAlreadyExistsException) {
-            System.err.printf("%s: " , userAlreadyExistsException.getLocalizedMessage());
+            System.err.printf("%s: ", userAlreadyExistsException.getLocalizedMessage());
+        }
+    }
+
+    @DisplayName("Find Passenger By Name")
+    @Test
+    void testToFindPassengerByPassengerFirstNameOrLastName() {
+        registerUser();
+
+        List<Passenger> foundPassengers = new ArrayList<>();
+        try {
+            foundPassengers = passengerServiceImpl.findPassengersByName("tOBi");
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
         }
 
-        List<Passenger> foundPassengers = passengerServiceImpl.findPassengersByName("tOBi");
-
         assertEquals(2, foundPassengers.size());
+    }
+
+    @DisplayName("Throw User Not Found Exception When User Does Not Exist")
+    @Test
+    void testToThrowExceptionWhenUserWithAParticularNameDoesNotExist(){
+
+        registerUser();
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                ()->passengerServiceImpl.findPassengersByName("TOBE"));
+        assertEquals("User Not Found", exception.getLocalizedMessage());
+    }
+
+    @DisplayName("Update User")
+    @Test
+    void testToUpdateUsersInformation(){
+        registerUser();
+
+        Passenger foundPassenger = null;
+        try {
+            foundPassenger = passengerServiceImpl.findPassengerById("1");
+        } catch (UserNotFoundException e) {
+            System.err.printf("%s: " , e.getLocalizedMessage());
+        }
+        System.out.println(passenger1);
+        assertNotNull(foundPassenger);
+
+        assertEquals("Jolayemi",foundPassenger.getLastName());
+        System.out.println(passenger1.toString());
+        passenger1.setFirstName("Yinka");
+        assertEquals("Yinka", passenger1.getFirstName());
+        System.out.println(passenger1.toString());
+        System.out.println(foundPassenger);
     }
 }

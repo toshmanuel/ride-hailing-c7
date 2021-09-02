@@ -10,7 +10,7 @@ public interface PassengerService {
     void createPassenger(Passenger passenger) throws UserAlreadyExistsException;
     Passenger findPassenger(Passenger passenger) throws UserNotFoundException;
     Passenger findPassengerById(String passengerId) throws UserNotFoundException;
-    List<Passenger> findPassengersByName(String firstName);
+    List<Passenger> findPassengersByName(String firstName) throws UserNotFoundException;
     void updatePassenger(Passenger passenger);
     void deletePassenger(Passenger passenger);
 

@@ -38,7 +38,7 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public List<Passenger> findPassengersByName(String name) {
+    public List<Passenger> findPassengersByName(String name) throws UserNotFoundException{
         List<Passenger> passengers = new ArrayList<>();
         for (Passenger passenger :
              passengerDb.findAll()) {
@@ -46,6 +46,9 @@ public class PassengerServiceImpl implements PassengerService {
                 passengers.add(passenger);
             }
 
+            if (passengers.isEmpty()){
+                throw new UserNotFoundException("User Not Found");
+            }
         }
         return passengers;
     }
