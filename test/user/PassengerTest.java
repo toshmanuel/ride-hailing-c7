@@ -17,6 +17,7 @@ class PassengerTest {
     PassengerServiceImpl passengerServiceImpl;
     Passenger passenger1;
     Passenger passenger2;
+
     @BeforeEach
     void setUp() {
         passenger1 = new Passenger("1",
@@ -72,7 +73,7 @@ class PassengerTest {
 
     @DisplayName("Find Passenger")
     @Test
-    void testToFindPassenger(){
+    void testToFindPassenger() {
         registerUser();
         assertEquals(2, passengerServiceImpl.count());
 
@@ -90,7 +91,7 @@ class PassengerTest {
     @Test
     void testToThrowsExceptionIfPassengerObjectDoesNotExist() {
         UserNotFoundException exception = assertThrows(UserNotFoundException.class,
-                ()-> passengerServiceImpl.findPassenger(passenger1));
+                () -> passengerServiceImpl.findPassenger(passenger1));
 
         assertEquals("Passenger not found",
                 exception.getLocalizedMessage());
@@ -104,11 +105,11 @@ class PassengerTest {
         try {
             foundPassenger = passengerServiceImpl.findPassengerById("1");
         } catch (UserNotFoundException e) {
-            System.err.printf("%s: " , e.getLocalizedMessage());
+            System.err.printf("%s: ", e.getLocalizedMessage());
         }
         assertNotNull(foundPassenger);
 
-        assertEquals("Jolayemi",foundPassenger.getLastName());
+        assertEquals("Jolayemi", foundPassenger.getLastName());
     }
 
     private void registerUser() {
@@ -137,33 +138,38 @@ class PassengerTest {
 
     @DisplayName("Throw User Not Found Exception When User Does Not Exist")
     @Test
-    void testToThrowExceptionWhenUserWithAParticularNameDoesNotExist(){
+    void testToThrowExceptionWhenUserWithAParticularNameDoesNotExist() {
 
         registerUser();
         UserNotFoundException exception = assertThrows(UserNotFoundException.class,
-                ()->passengerServiceImpl.findPassengersByName("TOBE"));
+                () -> passengerServiceImpl.findPassengersByName("TOBE"));
         assertEquals("User Not Found", exception.getLocalizedMessage());
     }
 
     @DisplayName("Update User")
     @Test
-    void testToUpdateUsersInformation(){
+    void testToUpdateUsersInformation() {
         registerUser();
+
+        PassengerUpdateForm form = new PassengerUpdateForm();
+        form.setFirstName("Yinka");
+        form.setLastName(null);
+        form.setEmail(null);
+        form.setPhoneNumber("08176587661");
+        try {
+            passengerServiceImpl.updatePassenger("1", form);
+        } catch (UserNotFoundException e) {
+            e.getLocalizedMessage();
+        }
 
         Passenger foundPassenger = null;
         try {
             foundPassenger = passengerServiceImpl.findPassengerById("1");
         } catch (UserNotFoundException e) {
-            System.err.printf("%s: " , e.getLocalizedMessage());
+            System.err.printf("%s: ", e.getLocalizedMessage());
         }
-        System.out.println(passenger1);
-        assertNotNull(foundPassenger);
+        assertEquals("Yinka", foundPassenger.getFirstName());
+        assertEquals("Jolayemi", foundPassenger.getLastName());
 
-        assertEquals("Jolayemi",foundPassenger.getLastName());
-        System.out.println(passenger1.toString());
-        passenger1.setFirstName("Yinka");
-        assertEquals("Yinka", passenger1.getFirstName());
-        System.out.println(passenger1.toString());
-        System.out.println(foundPassenger);
     }
 }
