@@ -74,7 +74,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public void deletePassenger(Passenger passenger) {
-
+        passengerDb.delete(passenger);
     }
 
     public long count(){

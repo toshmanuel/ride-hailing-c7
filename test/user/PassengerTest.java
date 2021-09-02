@@ -172,4 +172,13 @@ class PassengerTest {
         assertEquals("Jolayemi", foundPassenger.getLastName());
 
     }
+
+    @DisplayName("Display Passenger")
+    @Test
+    void testToDeletePassenger() {
+        registerUser();
+        passengerServiceImpl.deletePassenger(passenger1);
+
+        assertEquals(1, passengerServiceImpl.count());
+    }
 }

@@ -50,4 +50,8 @@ public class PassengerDb {
     public List<Passenger> findAll() {
         return new ArrayList<>(passengerMap.values());
     }
+
+    public void delete(Passenger passenger) {
+        passengerMap.remove(passenger.getPassengerId());
+    }
 }
